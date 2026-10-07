@@ -28,7 +28,12 @@ w1 = model.coef_[0]          # w1 is the slope
  
 print("Coefficient vector [w0, w1] =", [round(float(w0), 4), round(float(w1), 4)])
 print(f"Equation: y = {w0:.4f} + {w1:.4f} * x")
- 
+
+# Function to compute the RMSE
+def rmse(y_actual, y_predicted):
+    errors = y_actual - y_predicted          # difference for every example
+    return np.sqrt(np.mean(errors ** 2))     # square, average, square root
+
 # Compute the training RMSE
 Y_pred = model.predict(X_2d)
 print("Training RMSE =", round(rmse(Y, Y_pred), 4))
