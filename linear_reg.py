@@ -36,7 +36,7 @@ def rmse(y_actual, y_predicted):
 
 # Compute the training RMSE
 Y_pred = model.predict(X_2d)
-print("Training RMSE =", round(rmse(Y, Y_pred), 4))
+print(rmse(Y, Y_pred))
  
 # Plot the data together with the line the model found
 plt.scatter(X, Y, color="blue", label="Training data")
@@ -46,3 +46,38 @@ plt.ylabel("y")
 plt.title("Linear regression fit")
 plt.legend()
 plt.show()
+
+#split the dataset into training set (80%) and testing set (20%) and perform the linear regression to find the coefficients using the least square method
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv("GasProperties.csv")
+
+# T = temperature, P = pressure, TC = critical temperature, SV = specific volume
+inputs = df[["T", "P", "TC", "SV"]].values
+output = df["Idx"].values
+
+# 80% training, 20% testing
+X_train, X_test, y_train, y_test = train_test_split(
+    inputs, output, test_size=0.2, random_state=2
+)
+
+# Add a column of 1s so the model also learns w0 (the intercept)
+def add_bias_column(X):
+    ones = np.ones((X.shape[0], 1))
+    return np.hstack([ones, X])
+
+X_train_b = add_bias_column(X_train)
+X_test_b = add_bias_column(X_test)
+
+# Least squares formula: w = (X^T X)^-1 X^T y
+w = np.linalg.inv(X_train_b.T @ X_train_b) @ X_train_b.T @ y_train
+print("Coefficients [w0, w1, w2, w3, w4] =", w)
+
+# Predictions are  y_hat = X * w
+train_pred = X_train_b @ w
+test_pred = X_test_b @ w
+
+# Uses the rmse(y_actual, y_predicted) function defined at the top of this file
+print("Training RMSE =", rmse(y_train, train_pred))
+print("Testing  RMSE =", rmse(y_test, test_pred))
