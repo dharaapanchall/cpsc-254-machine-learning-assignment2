@@ -21,3 +21,23 @@ plt.show()
 # Train using linear regression
 model = LinearRegression()
 model.fit(X_2d, Y)
+
+# Show the coefficients and the equation
+w0 = model.intercept_        # w0 is the intercept
+w1 = model.coef_[0]          # w1 is the slope
+ 
+print("Coefficient vector [w0, w1] =", [round(float(w0), 4), round(float(w1), 4)])
+print(f"Equation: y = {w0:.4f} + {w1:.4f} * x")
+ 
+# Compute the training RMSE
+Y_pred = model.predict(X_2d)
+print("Training RMSE =", round(rmse(Y, Y_pred), 4))
+ 
+# Plot the data together with the line the model found
+plt.scatter(X, Y, color="blue", label="Training data")
+plt.plot(X, Y_pred, color="red", label="Linear regression line")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Linear regression fit")
+plt.legend()
+plt.show()
