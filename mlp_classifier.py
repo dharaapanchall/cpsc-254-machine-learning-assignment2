@@ -39,3 +39,54 @@ test_acc = accuracy_score(y_test, test_pred) * 100
 print("Original MLP Classifier")
 print(f"Training Accuracy = {train_acc:.2f}%")
 print(f"Testing Accuracy = {test_acc:.2f}%")
+
+# Change the hyperparameters without adding more layers or neurons
+model2 = MLPClassifier(
+    hidden_layer_sizes=(3,),
+    activation="tanh",
+    solver="adam",
+    learning_rate_init=0.001,
+    max_iter=2000,
+    batch_size=32,
+    random_state=42
+)
+
+model2.fit(X_train, y_train)
+
+# Predict the training and testing datasets
+train_pred2 = model2.predict(X_train)
+test_pred2 = model2.predict(X_test)
+
+# Compute the training and testing accuracy
+train_acc2 = accuracy_score(y_train, train_pred2) * 100
+test_acc2 = accuracy_score(y_test, test_pred2) * 100
+
+print("\nMLP Classifier with Adjusted Hyperparameters")
+print(f"Training Accuracy = {train_acc2:.2f}%")
+print(f"Testing Accuracy = {test_acc2:.2f}%")
+
+
+# Increase network complexity by adding more layers and neurons
+model3 = MLPClassifier(
+    hidden_layer_sizes=(10, 10),
+    activation="tanh",
+    solver="lbfgs",
+    learning_rate_init=0.01,
+    max_iter=1000,
+    batch_size=32,
+    random_state=42
+)
+
+model3.fit(X_train, y_train)
+
+# Predict the training and testing datasets
+train_pred3 = model3.predict(X_train)
+test_pred3 = model3.predict(X_test)
+
+# Compute the training and testing accuracy
+train_acc3 = accuracy_score(y_train, train_pred3) * 100
+test_acc3 = accuracy_score(y_test, test_pred3) * 100
+
+print("\nMLP Classifier with Increased Complexity")
+print(f"Training Accuracy = {train_acc3:.2f}%")
+print(f"Testing Accuracy = {test_acc3:.2f}%")
