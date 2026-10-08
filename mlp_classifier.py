@@ -40,6 +40,7 @@ print("Original MLP Classifier")
 print(f"Training Accuracy = {train_acc:.2f}%")
 print(f"Testing Accuracy = {test_acc:.2f}%")
 
+
 # Change the hyperparameters without adding more layers or neurons
 model2 = MLPClassifier(
     hidden_layer_sizes=(3,),
@@ -69,8 +70,8 @@ print(f"Testing Accuracy = {test_acc2:.2f}%")
 # Increase network complexity by adding more layers and neurons
 model3 = MLPClassifier(
     hidden_layer_sizes=(10, 10),
-    activation="tanh",
-    solver="lbfgs",
+    activation="relu",
+    solver="adam",
     learning_rate_init=0.01,
     max_iter=1000,
     batch_size=32,
